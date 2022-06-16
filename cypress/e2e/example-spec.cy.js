@@ -19,4 +19,25 @@ describe('my app', () => {
 
     cy.contains('Sign Out').should('be.visible');
   });
+
+  it('creates firestore data', () => {
+    const createDoc = cy.contains('Create Document');
+
+    createDoc.click();
+
+    cy.contains('📜 I like Next').should('be.visible');
+  });
+
+  it('aggregates data with a firestore cloud function', () => {
+    cy.get('#totalPosts').should('contain.text', '1');
+
+    cy.contains('Create Document').click();
+    cy.get('#totalPosts').should('contain.text', '2');
+
+    cy.contains('Create Document').click();
+    cy.get('#totalPosts').should('contain.text', '3');
+
+    cy.contains('Create Document').click();
+    cy.get('#totalPosts').should('contain.text', '4');
+  });
 });
