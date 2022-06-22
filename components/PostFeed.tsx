@@ -1,6 +1,11 @@
 import Link from 'next/link';
 
-export default function PostFeed({ posts, admin }) {
+type FeedProps = {
+  posts: any;
+  admin?: boolean;
+}
+
+export default function PostFeed({ posts, admin }: FeedProps) {
   return posts
     ? posts.map((post) => (
         <PostItem post={post} key={post.slug} admin={admin} />
