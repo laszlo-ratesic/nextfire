@@ -67,6 +67,7 @@ function CreateNewPost() {
     // TIP: Give all fields a default value here
     const data = {
       title,
+      slug,
       uid,
       username,
       published: false,
