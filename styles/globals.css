@@ -272,6 +272,18 @@ input[type='file'] {
   display: none;
 }
 
+.flex {
+  display: flex;
+}
+
+.flex-col {
+  flex-direction: column;
+}
+
+.items-center {
+  align-items: center;
+}
+
 /* Loader */
 
 .loader {

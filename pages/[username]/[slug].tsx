@@ -7,8 +7,8 @@ export async function getStaticProps({ params }) {
   const { username, slug } = params;
   const userDoc = await getUserWithUsername(username);
 
-  let post;
-  let path;
+  let post: any;
+  let path: string;
 
   if (userDoc) {
     const postRef = userDoc.ref.collection('posts').doc(slug);
@@ -46,5 +46,23 @@ export async function getStaticPaths() {
 }
 
 export default function Post(props) {
-  return <main className={styles.container}></main>;
+  const postRef = firestore.doc(props.path);
+  // @ts-ignore
+  const [realtimePost] = useDocumentData(postRef);
+
+  const post = realtimePost || props.post;
+
+  return (
+    <main className={styles.container}>
+      <section>
+        <PostContent post={post} />
+      </section>
+
+      <aside className="card">
+        <p>
+          <strong>{post.hearCount || 0} ❤️</strong>
+        </p>
+      </aside>
+    </main>
+  );
 }
