@@ -9,6 +9,7 @@ import Link from 'next/link';
 import toast from 'react-hot-toast';
 import { auth, firestore } from '../../lib/firebase';
 import { serverTimestamp } from 'firebase/firestore';
+import ImageUploader from '../../components/ImageUploader';
 
 export default function AdminPostEdit(props) {
   return (
@@ -98,6 +99,9 @@ function PostForm({ defaultValues, postRef, preview }) {
       )}
 
       <div className={preview ? styles.hidden : styles.controls}>
+
+      <ImageUploader />
+
         <textarea
           {...register("content", {
             maxLength: { value: 20000, message: 'content is too long' },
