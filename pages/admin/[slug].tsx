@@ -70,12 +70,12 @@ function PostManager() {
 }
 
 function PostForm({ defaultValues, postRef, preview }) {
-  const { register, handleSubmit, reset, watch, formState: { errors }} = useForm({
+  const { register, handleSubmit, reset, watch, formState: { errors }, formState } = useForm({
     defaultValues,
     mode: 'onChange',
   });
 
-  const { isValid, isDirty } = errors;
+  const { isValid, isDirty } = formState;
 
   const updatePost = async ({ content, published }) => {
     await postRef.update({
@@ -99,8 +99,7 @@ function PostForm({ defaultValues, postRef, preview }) {
 
       <div className={preview ? styles.hidden : styles.controls}>
         <textarea
-          name="content"
-          ref={register({
+          {...register("content", {
             maxLength: { value: 20000, message: 'content is too long' },
             minLength: { value: 10, message: 'content is too short' },
             required: { value: true, message: 'content is required' }
@@ -112,9 +111,8 @@ function PostForm({ defaultValues, postRef, preview }) {
         <fieldset>
           <input
             type="checkbox"
-            name="published"
             className={styles.checkbox}
-            ref={register}
+            {...register("published")}
           />
           <label>Published</label>
         </fieldset>
@@ -122,7 +120,7 @@ function PostForm({ defaultValues, postRef, preview }) {
         <button
           type="submit"
           className="btn-green"
-          // disabled={!isDirty || !isValid}
+          disabled={!isDirty || !isValid}
         >
           Save Changes
         </button>
